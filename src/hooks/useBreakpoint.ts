@@ -1,5 +1,5 @@
-import { Breakpoint } from '@/utils/breakpoint';
-import { onBeforeMount, onBeforeUnmount, onMounted, reactive } from 'vue';
+import { Breakpoint } from "@/utils/breakpoint";
+import { onBeforeUnmount, reactive } from "vue";
 function useBreakpoint() {
   const breakpoint = reactive(
     new Breakpoint({
@@ -14,13 +14,11 @@ function useBreakpoint() {
     })
   );
 
-  onBeforeMount(() => {
-    breakpoint.init();
-  })
+  breakpoint.init();
 
   onBeforeUnmount(() => {
-    breakpoint.remove()
-  })
+    breakpoint.remove();
+  });
 
   return breakpoint;
 }
