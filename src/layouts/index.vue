@@ -36,7 +36,7 @@
           minHeight: '280px'
         }"
       >
-        <pre>{{ breakpoint }}</pre>
+        <router-view></router-view>
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -44,7 +44,7 @@
 <script lang="tsx">
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons-vue";
 import { computed, defineComponent, ref } from "vue";
-import Menu from "@/components/Menu.vue";
+import Menu from "@/components/Menu/Menu.vue";
 import useBreakpoint from "@/hooks/useBreakpoint";
 export default defineComponent({
   name: "Index",

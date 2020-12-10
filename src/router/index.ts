@@ -1,15 +1,5 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Index from "../layouts/index.vue";
-
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: "/",
-    name: "index",
-    component: Index,
-    children: []
-  }
-];
-
+import { createRouter, createWebHistory } from "vue-router";
+import routes from "./routes";
 const router = createRouter({
   history: createWebHistory(),
   routes
