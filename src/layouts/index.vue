@@ -1,40 +1,31 @@
 <template>
   <a-layout id="IndexLayout">
-    <a-layout-sider
+    <Menu
       v-if="breakpoint && !breakpoint.mobile"
       v-model:collapsed="collapsed"
-      :trigger="null"
-      collapsible
+    ></Menu>
+    <a-drawer
+      placement="left"
+      :closable="false"
+      v-model:visible="visible"
+      :bodyStyle="{ padding: 0 }"
+      :width="200"
+      class="drawer_menu"
+      destroyOnClose
     >
-      <div class="flex-row-center pa-7">
-        <h3>Arutoria</h3>
-      </div>
-      <a-menu theme="dark" mode="inline" v-model:selectedKeys="selectedKeys">
-        <a-menu-item key="1">
-          <user-outlined />
-          <span>nav 1</span>
-        </a-menu-item>
-        <a-menu-item key="2">
-          <video-camera-outlined />
-          <span>nav 2</span>
-        </a-menu-item>
-        <a-menu-item key="3">
-          <upload-outlined />
-          <span>nav 3</span>
-        </a-menu-item>
-      </a-menu>
-    </a-layout-sider>
+      <Menu :collapsible="false" :collapsed="false"></Menu>
+    </a-drawer>
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0">
         <menu-unfold-outlined
           v-if="collapsed"
           class="trigger"
-          @click="() => (collapsed = !collapsed)"
+          @click="collapsed = !collapsed"
         />
         <menu-fold-outlined
           v-else
           class="trigger"
-          @click="() => (collapsed = !collapsed)"
+          @click="collapsed = !collapsed"
         />
       </a-layout-header>
       <a-layout-content
@@ -51,31 +42,31 @@
   </a-layout>
 </template>
 <script lang="tsx">
-import {
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined
-} from "@ant-design/icons-vue";
-import { defineComponent, ref } from "vue";
+import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons-vue";
+import { computed, defineComponent, ref } from "vue";
+import Menu from "@/components/Menu.vue";
 import useBreakpoint from "@/hooks/useBreakpoint";
 export default defineComponent({
   name: "Index",
   components: {
-    UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
     MenuUnfoldOutlined,
-    MenuFoldOutlined
+    MenuFoldOutlined,
+    Menu
   },
 
   setup() {
     const collapsed = ref(false);
     const selectedKeys = ref([]);
     const breakpoint = useBreakpoint();
+    const visible = computed({
+      set: value => {
+        collapsed.value = !!value;
+      },
+      get: () => breakpoint.mobile && collapsed.value
+    });
     return {
       collapsed,
+      visible,
       selectedKeys,
       breakpoint
     };
@@ -83,7 +74,8 @@ export default defineComponent({
 });
 </script>
 <style lang="less">
-#IndexLayout {
+#IndexLayout,
+.drawer_menu {
   .ant-layout-sider-children {
     h3 {
       color: #ffffff;
@@ -98,6 +90,9 @@ export default defineComponent({
   }
   .ant-layout-content {
     height: 100%;
+  }
+  .ant-layout-sider {
+    height: 100vh;
   }
 }
 </style>
