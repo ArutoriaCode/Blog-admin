@@ -1,5 +1,8 @@
 <template>
-  <div></div>
+  <div>
+    <h1>Comment</h1>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script lang="ts">

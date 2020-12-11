@@ -8,7 +8,12 @@
     <div class="flex-row-center pa-7">
       <h3>Arutoria</h3>
     </div>
-    <a-menu theme="dark" mode="inline" v-model:selectedKeys="selectedKeys">
+    <a-menu
+      theme="dark"
+      mode="inline"
+      v-model:selectedKeys="selectedKeys"
+      @select="onClickMenuItem"
+    >
       <template v-for="menu in menus" :key="menu.key">
         <a-menu-item
           :key="menu.key"
@@ -25,10 +30,18 @@
   </a-layout-sider>
 </template>
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, Ref } from "vue";
 import { UserOutlined } from "@ant-design/icons-vue";
 import { generateMenu } from "./generate";
 import SubMenu from "./SubMenu.vue";
+import router from "@/router";
+import { useRoute } from "vue-router";
+
+interface MenuItem {
+  key: string;
+  keyPath: string[];
+  item?: Ref;
+}
 
 export default defineComponent({
   name: "Menu",
@@ -42,17 +55,21 @@ export default defineComponent({
     SubMenu
   },
   setup(props, ctx) {
+    const route = useRoute();
     const menus = generateMenu();
-    const selectedKeys = ref<Array<string>>([]);
+    const selectedKeys = ref<string[]>([route.path]);
     const onCollapse = (collapsed: boolean) => {
       ctx.emit("update:collapsed", collapsed);
     };
 
-    watch(selectedKeys, value => {
-      console.log("value ------------>", value);
-    });
+    const onClickMenuItem = (item: MenuItem) => {
+      selectedKeys.value = [item.key];
+      router.push(item.key);
+    };
+
     return {
       selectedKeys,
+      onClickMenuItem,
       onCollapse,
       menus
     };

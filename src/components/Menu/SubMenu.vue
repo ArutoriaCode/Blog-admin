@@ -4,10 +4,10 @@
       {{ menu.title }}
     </template>
     <template v-for="m in menu.children" :key="m.key">
-      <a-menu-item :key="menuKey + m.key" v-if="!m.children">
+      <a-menu-item :key="m.key" v-if="!m.children">
         <span>{{ m.title }}</span>
       </a-menu-item>
-      <template v-else>
+      <template v-else-if="menu.children && menu.children.length > 0">
         <sub-menu :menu="m" :menuKey="m.key"></sub-menu>
       </template>
     </template>
