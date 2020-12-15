@@ -6,6 +6,7 @@ export interface Menu {
   title: string;
   key: string;
   disabled: boolean;
+  icon?: string;
   children?: Menu[];
 }
 
@@ -16,6 +17,10 @@ function generateSubMenu(children: RouteRecordRaw[]) {
       key: route.path,
       disabled: !!route!.meta?.disabled
     };
+
+    if (route.meta && route.meta.icon) {
+      subMenu.icon = route.meta.icon;
+    }
 
     if (route.children && route.children.length > 0) {
       subMenu.children = generateSubMenu(route.children);
@@ -33,6 +38,10 @@ export function generateMenu() {
       key: route.path,
       disabled: !!route!.meta?.disabled
     };
+
+    if (route.meta && route.meta.icon) {
+      menu.icon = route.meta.icon;
+    }
 
     if (route.children && route.children.length > 0) {
       menu.children = generateSubMenu(route.children);

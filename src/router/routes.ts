@@ -6,7 +6,8 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "index",
     meta: {
-      title: "首页"
+      title: "首页",
+      icon: "icon-zhuye"
     },
     component: Index
   },
@@ -14,7 +15,8 @@ const routes: Array<RouteRecordRaw> = [
     path: "/comment",
     name: "comment",
     meta: {
-      title: "评论管理"
+      title: "评论管理",
+      icon: "icon-shenhe"
     },
     component: () => import("@/views/Comment.vue")
   },
@@ -22,14 +24,16 @@ const routes: Array<RouteRecordRaw> = [
     path: "/post",
     name: "post",
     meta: {
-      title: "文章"
+      title: "文章",
+      icon: "icon-zixun"
     },
     children: [
       {
         path: "/post/manage",
         name: "PostManage",
         meta: {
-          title: "所有文章"
+          title: "所有文章",
+          icon: "icon-liebiao"
         },
         component: () => import("@/components/Post/PostAll.vue")
       },
@@ -37,7 +41,8 @@ const routes: Array<RouteRecordRaw> = [
         path: "/post/editor",
         name: "PostEditor",
         meta: {
-          title: "新建文章"
+          title: "新建文章",
+          icon: "icon-xitong"
         },
         component: () => import("@/components/Post/PostEditor.vue")
       }

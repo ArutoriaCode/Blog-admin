@@ -19,7 +19,10 @@
           :key="menu.key"
           v-if="!menu.children || menu.children.length === 0"
         >
-          <user-outlined />
+          <icon-font
+            :extraCommonProps="{ class: 'icon-font' }"
+            :type="menu.icon"
+          />
           <span>{{ menu.title }}</span>
         </a-menu-item>
         <template v-else-if="menu.children && menu.children.length > 0">
@@ -30,12 +33,12 @@
   </a-layout-sider>
 </template>
 <script lang="ts">
-import { defineComponent, ref, Ref } from "vue";
-import { UserOutlined } from "@ant-design/icons-vue";
+import { defineComponent, FunctionalComponent, ref, Ref } from "vue";
 import { generateMenu } from "./generate";
+import { useRoute } from "vue-router";
 import SubMenu from "./SubMenu.vue";
 import router from "@/router";
-import { useRoute } from "vue-router";
+import IconFont from "./IconFont";
 
 interface MenuItem {
   key: string;
@@ -51,8 +54,8 @@ export default defineComponent({
   },
   emits: ["update:collapsed"],
   components: {
-    UserOutlined,
-    SubMenu
+    SubMenu,
+    IconFont: IconFont as FunctionalComponent
   },
   setup(props, ctx) {
     const route = useRoute();
@@ -76,3 +79,8 @@ export default defineComponent({
   }
 });
 </script>
+<style lang="less">
+.icon-font {
+  color: #fff;
+}
+</style>
